@@ -23,6 +23,10 @@ const adminSchema = new mongoose.Schema({
     max: 1024,
     minLength: 6,
   },
+  picture: {
+      type: String,
+      default:""
+  },
   bio: {
     type: String,
     max: 1024,
