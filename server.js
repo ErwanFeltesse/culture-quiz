@@ -1,6 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const adminRoutes = require("./routes/admin.routes");
+const quizRoutes = require("./routes/quiz.routes");
 require("dotenv").config({ path: "./config/.env" });
 require("./config/db");
 const { checkAdmin, requireAuth } = require("./middleware/auth.middleware");
@@ -13,11 +14,12 @@ app.use(cookieParser());
 //jwt
 app.get("*", checkAdmin);
 app.get("/jwtid", requireAuth, (req, res) => {
-  res.status(200).send(res.locals.admin._id)
+  res.status(200).send(res.locals.admin._id);
 });
 
 //routes
 app.use("/api/admin", adminRoutes);
+app.use("api/quiz", quizRoutes);
 
 // server
 app.listen(process.env.PORT, () => {
