@@ -1,5 +1,6 @@
 const AdminModel = require("../models/admin.model");
 const jwt = require("jsonwebtoken");
+const { signInErrors, signUpErrors } = require("../utils/errors.utils");
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
@@ -10,15 +11,17 @@ const createToken = (id) => {
 };
 
 module.exports.signUp = async (req, res) => {
-  const { pseudo, email, password } = req.body;
-
-  try {
-    const admin = await AdminModel.create({ pseudo, email, password });
-    res.status(201).json({ admin: admin._id });
-  } catch (err) {
-    res.status(200).send({ err });
-  }
-};
+    console.log(req.body);
+    const { pseudo, email, password } = req.body;
+  
+    try {
+      const admin = await AdminModel.create({ pseudo, email, password });
+      res.status(201).json({ admin: admin._id });
+    } catch (err) {
+      const errors = signUpErrors(err);
+      res.status(200).send({ errors });
+    }
+  };
 
 // authentification avec jws
 
