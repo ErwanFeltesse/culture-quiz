@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
+const bcrypt = require("bcrypt");
 
 const adminSchema = new mongoose.Schema({
   pseudo: {
@@ -24,8 +25,8 @@ const adminSchema = new mongoose.Schema({
     minLength: 6,
   },
   picture: {
-      type: String,
-      default:""
+    type: String,
+    default: "",
   },
   bio: {
     type: String,
@@ -33,5 +34,12 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
-const AdminModel = mongoose.model('admin', adminSchema)
-module.exports = AdminModel
+// play function before save into display: 'block'
+adminSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt();
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+const AdminModel = mongoose.model("admin", adminSchema);
+module.exports = AdminModel;
