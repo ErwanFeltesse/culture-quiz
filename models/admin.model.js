@@ -27,7 +27,7 @@ const adminSchema = new mongoose.Schema({
   },
   picture: {
     type: String,
-    default: "",
+    default:"./uploads/profil//random-user.png",
   },
   bio: {
     type: String,

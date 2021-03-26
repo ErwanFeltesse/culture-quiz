@@ -14,8 +14,7 @@ module.exports.readQuiz = (req, res) => {
 
 module.exports.createQuiz = async (req, res) => {
   let fileName;
-
-  if (req.file !== null) {
+    if (req.file !== null) {
     try {
       if (
         req.file.detectedMimeType !== "image/jpg" &&
@@ -36,13 +35,17 @@ module.exports.createQuiz = async (req, res) => {
       )
     );
   }
-
   const newQuiz = new QuizModel({
     posterId: req.body.posterId,
+    quiz_name: req.body.quiz_name,
     description: req.body.description,
     category: req.body.category,
+    bar_name: req.body.bar_name,
+    bar_adress: req.body.bar_adress,
     picture: req.file !== null ? "./uploads/quizs/" + fileName : "",
-    date_quiz: req.body.date_quiz,
+    quiz_date: req.body.quiz_date,
+    quiz_time: req.body.quiz_time,
+    quiz_day: req.body.quiz_day,
   });
 
   try {
@@ -58,9 +61,14 @@ module.exports.updateQuiz = (req, res) => {
     return res.status(400).send("ID unknown : " + req.params.id);
 
   const updatedRecord = {
+    quiz_name: req.body.quiz_name,
     description: req.body.description,
-    date_quiz: req.body.date_quiz,
     category: req.body.category,
+    bar_name: req.body.bar_name,
+    bar_adress: req.body.bar_adress,
+    quiz_date: req.body.quiz_date,
+    quiz_time: req.body.quiz_time,
+    quiz_day: req.body.quiz_day,
   };
   QuizModel.findByIdAndUpdate(
     req.params.id,

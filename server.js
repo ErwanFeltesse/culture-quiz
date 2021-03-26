@@ -5,10 +5,25 @@ const quizRoutes = require("./routes/quiz.routes");
 require("dotenv").config({ path: "./config/.env" });
 require("./config/db");
 const { checkAdmin, requireAuth } = require("./middleware/auth.middleware");
+const cors = require('cors');
+const bodyParser = require("body-parser");
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+
+const corsOptions= {
+  origin: process.env.CLIENT_URL,
+  credentials : true,
+  'allowedHeaders': ['sessionId', 'Content-Type'],
+  'exposedHeaders': ['sessionId'],
+  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  'preflightContinue': false
+}
+
+app.use(cors(corsOptions))
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //jwt
@@ -19,7 +34,7 @@ app.get("/jwtid", requireAuth, (req, res) => {
 
 //routes
 app.use("/api/admin", adminRoutes);
-app.use("api/quiz", quizRoutes);
+app.use("/api/quiz", quizRoutes);
 
 // server
 app.listen(process.env.PORT, () => {
