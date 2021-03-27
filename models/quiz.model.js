@@ -38,6 +38,16 @@ const quizSchema = new mongoose.Schema(
     picture: {
       type: String,
     },
+    opinion: {
+      type: String,
+      trim: true,
+      maxlength: 500,
+    },
+    level:{
+      type: String,
+      required: true,
+      maxlength: 10,
+    },
   },
   {
     timestamps: true,
