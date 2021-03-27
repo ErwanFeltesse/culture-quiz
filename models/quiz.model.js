@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const quizSchema = new mongoose.Schema(
   {
-    posterId: {
+    barId: {
       type: String,
       required: true,
     },
@@ -34,16 +34,6 @@ const quizSchema = new mongoose.Schema(
       required: true,
       maxlength: 10,
       trim: true,
-    },
-    bar_name: {
-      type: String,
-      trim: true,
-      maxlength: 90,
-    },
-    bar_adress: {
-      type: String,
-      trim: true,
-      maxlength: 500,
     },
     picture: {
       type: String,

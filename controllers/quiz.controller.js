@@ -27,7 +27,7 @@ module.exports.createQuiz = async (req, res) => {
       const errors = uploadErrors(err);
       return res.status(200).json({ errors });
     }
-    fileName = req.body.posterId + Date.now() + ".jpg";
+    fileName = req.body.barId + Date.now() + ".jpg";
     await pipeline(
       req.file.stream,
       fs.createWriteStream(
@@ -36,12 +36,10 @@ module.exports.createQuiz = async (req, res) => {
     );
   }
   const newQuiz = new QuizModel({
-    posterId: req.body.posterId,
+    barId: req.body.barId,
     quiz_name: req.body.quiz_name,
     description: req.body.description,
     category: req.body.category,
-    bar_name: req.body.bar_name,
-    bar_adress: req.body.bar_adress,
     picture: req.file !== null ? "./uploads/quizs/" + fileName : "",
     quiz_date: req.body.quiz_date,
     quiz_time: req.body.quiz_time,
@@ -64,8 +62,6 @@ module.exports.updateQuiz = (req, res) => {
     quiz_name: req.body.quiz_name,
     description: req.body.description,
     category: req.body.category,
-    bar_name: req.body.bar_name,
-    bar_adress: req.body.bar_adress,
     quiz_date: req.body.quiz_date,
     quiz_time: req.body.quiz_time,
     quiz_day: req.body.quiz_day,
